@@ -1,0 +1,93 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class BankAccount
+{
+private:
+    string name;
+    long accountNumber;
+    string accountType;
+    double balance;
+
+public:
+
+    // Constructor
+    BankAccount(string n, long accNo, string type, double bal)
+    {
+        name = n;
+        accountNumber = accNo;
+        accountType = type;
+        balance = bal;
+
+        cout << "Account created successfully." << endl;
+    }
+
+    // Deposit
+    void deposit(long accNo, string customerName, double amount)
+    {
+        if (accNo == accountNumber && customerName == name)
+        {
+            balance = balance + amount;
+            cout << "Amount deposited successfully." << endl;
+        }
+        else
+        {
+            cout << "Account number or name is incorrect." << endl;
+        }
+    }
+
+    // Withdraw
+    void withdraw(double amount)
+    {
+        if (amount <= balance)
+        {
+            balance = balance - amount;
+            cout << "Amount withdrawn successfully." << endl;
+        }
+        else
+        {
+            cout << "Insufficient balance." << endl;
+        }
+    }
+
+    // Display
+    void display()
+    {
+        cout << "\n----- Bank Account Details -----" << endl;
+        cout << "Name: " << name << endl;
+        cout << "Account Number: " << accountNumber << endl;
+        cout << "Account Type: " << accountType << endl;
+        cout << "Balance: Rs. " << balance << endl;
+    }
+
+    // Destructor
+    ~BankAccount()
+    {
+        cout << "\nBank account object destroyed." << endl;
+    }
+};
+
+int main()
+{
+    BankAccount account(
+        "Vivek",
+        123456789,
+        "Savings",
+        10000
+    );
+
+    account.display();
+
+    cout << "\n--- Deposit ---" << endl;
+    account.deposit(123456789, "Vivek", 5000);
+
+    account.display();
+
+    cout << "\n--- Withdrawal ---" << endl;
+    account.withdraw(3000);
+
+    account.display();
+
+    return 0;
+}
