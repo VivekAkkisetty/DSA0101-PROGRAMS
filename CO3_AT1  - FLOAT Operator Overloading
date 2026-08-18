@@ -1,0 +1,76 @@
+#include <iostream>
+using namespace std;
+
+class FLOAT
+{
+private:
+    float value;
+
+public:
+
+    FLOAT()
+    {
+        value = 0;
+    }
+
+    FLOAT(float v)
+    {
+        value = v;
+    }
+
+    FLOAT operator+(FLOAT obj)
+    {
+        return FLOAT(value + obj.value);
+    }
+
+    FLOAT operator-(FLOAT obj)
+    {
+        return FLOAT(value - obj.value);
+    }
+
+    FLOAT operator*(FLOAT obj)
+    {
+        return FLOAT(value * obj.value);
+    }
+
+    FLOAT operator/(FLOAT obj)
+    {
+        if (obj.value == 0)
+        {
+            cout << "Division by zero is not allowed." << endl;
+            return FLOAT(0);
+        }
+
+        return FLOAT(value / obj.value);
+    }
+
+    void display()
+    {
+        cout << value << endl;
+    }
+};
+
+int main()
+{
+    FLOAT a(10.5);
+    FLOAT b(2.5);
+
+    FLOAT addition = a + b;
+    FLOAT subtraction = a - b;
+    FLOAT multiplication = a * b;
+    FLOAT division = a / b;
+
+    cout << "Addition: ";
+    addition.display();
+
+    cout << "Subtraction: ";
+    subtraction.display();
+
+    cout << "Multiplication: ";
+    multiplication.display();
+
+    cout << "Division: ";
+    division.display();
+
+    return 0;
+}
