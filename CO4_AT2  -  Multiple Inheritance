@@ -1,0 +1,86 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Worker
+{
+protected:
+    int code;
+    string name;
+    float salary;
+
+public:
+
+    void acceptWorker()
+    {
+        cout << "Enter worker code: ";
+        cin >> code;
+
+        cin.ignore();
+
+        cout << "Enter worker name: ";
+        getline(cin, name);
+
+        cout << "Enter salary: ";
+        cin >> salary;
+    }
+};
+
+class Officer
+{
+protected:
+    float DA;
+    float HRA;
+
+public:
+
+    void acceptOfficer()
+    {
+        cout << "Enter DA: ";
+        cin >> DA;
+
+        cout << "Enter HRA: ";
+        cin >> HRA;
+    }
+};
+
+class Manager : public Worker, public Officer
+{
+private:
+    float TA;
+    float grossSalary;
+
+public:
+
+    void calculate()
+    {
+        TA = 0.10 * salary;
+
+        grossSalary = salary + DA + HRA + TA;
+    }
+
+    void display()
+    {
+        cout << "\n----- Manager Details -----" << endl;
+        cout << "Code: " << code << endl;
+        cout << "Name: " << name << endl;
+        cout << "Basic Salary: Rs. " << salary << endl;
+        cout << "DA: Rs. " << DA << endl;
+        cout << "HRA: Rs. " << HRA << endl;
+        cout << "TA: Rs. " << TA << endl;
+        cout << "Gross Salary: Rs. " << grossSalary << endl;
+    }
+};
+
+int main()
+{
+    Manager obj;
+
+    obj.acceptWorker();
+    obj.acceptOfficer();
+
+    obj.calculate();
+    obj.display();
+
+    return 0;
+}
