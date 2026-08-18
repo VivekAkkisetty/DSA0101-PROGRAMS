@@ -1,0 +1,205 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Person
+{
+protected:
+    string name;
+    string address;
+    string phone_no;
+
+public:
+
+    void acceptPerson()
+    {
+        cout << "Enter name: ";
+        getline(cin, name);
+
+        cout << "Enter address: ";
+        getline(cin, address);
+
+        cout << "Enter phone number: ";
+        getline(cin, phone_no);
+    }
+
+    void displayPerson()
+    {
+        cout << "Name: " << name << endl;
+        cout << "Address: " << address << endl;
+        cout << "Phone Number: " << phone_no << endl;
+    }
+};
+
+class Employee : public Person
+{
+private:
+    int eno;
+    string ename;
+
+public:
+
+    void accept()
+    {
+        cout << "\n--- Employee Details ---" << endl;
+
+        acceptPerson();
+
+        cout << "Enter employee number: ";
+        cin >> eno;
+
+        cin.ignore();
+
+        cout << "Enter employee name: ";
+        getline(cin, ename);
+    }
+
+    void display()
+    {
+        cout << "\n--- Employee ---" << endl;
+
+        displayPerson();
+
+        cout << "Employee Number: " << eno << endl;
+        cout << "Employee Name: " << ename << endl;
+    }
+};
+
+class Manager : public Person
+{
+private:
+    string designation;
+    string department_name;
+    double basic_salary;
+
+public:
+
+    void accept()
+    {
+        cout << "\n--- Manager Details ---" << endl;
+
+        acceptPerson();
+
+        cout << "Enter designation: ";
+        getline(cin, designation);
+
+        cout << "Enter department name: ";
+        getline(cin, department_name);
+
+        cout << "Enter basic salary: ";
+        cin >> basic_salary;
+
+        cin.ignore();
+    }
+
+    void display()
+    {
+        cout << "\n--- Manager ---" << endl;
+
+        displayPerson();
+
+        cout << "Designation: " << designation << endl;
+        cout << "Department: " << department_name << endl;
+        cout << "Basic Salary: Rs. " << basic_salary << endl;
+    }
+
+    double getSalary()
+    {
+        return basic_salary;
+    }
+};
+
+int main()
+{
+    int n;
+    int choice;
+
+    cout << "Enter number of employees and managers: ";
+    cin >> n;
+    cin.ignore();
+
+    Employee employees[100];
+    Manager managers[100];
+
+    do
+    {
+        cout << "\n========== MENU ==========" << endl;
+        cout << "1. Accept details" << endl;
+        cout << "2. Display details" << endl;
+        cout << "3. Highest salary manager" << endl;
+        cout << "4. Exit" << endl;
+        cout << "Enter choice: ";
+        cin >> choice;
+        cin.ignore();
+
+        switch (choice)
+        {
+            case 1:
+
+                cout << "\nEnter Employee Details" << endl;
+
+                for (int i = 0; i < n; i++)
+                {
+                    cout << "\nEmployee " << i + 1 << endl;
+                    employees[i].accept();
+                }
+
+                cout << "\nEnter Manager Details" << endl;
+
+                for (int i = 0; i < n; i++)
+                {
+                    cout << "\nManager " << i + 1 << endl;
+                    managers[i].accept();
+                }
+
+                break;
+
+            case 2:
+
+                cout << "\n===== ALL EMPLOYEES =====" << endl;
+
+                for (int i = 0; i < n; i++)
+                {
+                    employees[i].display();
+                }
+
+                cout << "\n===== ALL MANAGERS =====" << endl;
+
+                for (int i = 0; i < n; i++)
+                {
+                    managers[i].display();
+                }
+
+                break;
+
+            case 3:
+            {
+                int highest = 0;
+
+                for (int i = 1; i < n; i++)
+                {
+                    if (managers[i].getSalary() >
+                        managers[highest].getSalary())
+                    {
+                        highest = i;
+                    }
+                }
+
+                cout << "\n===== HIGHEST SALARY MANAGER =====" << endl;
+                managers[highest].display();
+
+                break;
+            }
+
+            case 4:
+                cout << "Program ended." << endl;
+                break;
+
+            default:
+                cout << "Invalid choice." << endl;
+        }
+
+    } while (choice != 4);
+
+    return 0;
+}
