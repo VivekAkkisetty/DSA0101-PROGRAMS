@@ -1,0 +1,119 @@
+#include <iostream>
+#include <string>
+#include <iomanip>
+using namespace std;
+
+class Item
+{
+protected:
+    int itemNo;
+    string name;
+    double price;
+
+public:
+
+    void acceptItem()
+    {
+        cout << "Enter item number: ";
+        cin >> itemNo;
+
+        cin.ignore();
+
+        cout << "Enter item name: ";
+        getline(cin, name);
+
+        cout << "Enter price: ";
+        cin >> price;
+    }
+};
+
+class DiscountedItem : public Item
+{
+private:
+    double discountPercent;
+    double discountAmount;
+    double finalPrice;
+
+public:
+
+    void accept()
+    {
+        acceptItem();
+
+        cout << "Enter discount percentage: ";
+        cin >> discountPercent;
+    }
+
+    void calculate()
+    {
+        discountAmount = price * discountPercent / 100;
+
+        finalPrice = price - discountAmount;
+    }
+
+    void display()
+    {
+        cout << left
+             << setw(10) << itemNo
+             << setw(20) << name
+             << setw(12) << price
+             << setw(12) << discountPercent
+             << setw(15) << finalPrice
+             << endl;
+    }
+
+    double getFinalPrice()
+    {
+        return finalPrice;
+    }
+};
+
+int main()
+{
+    int n;
+
+    cout << "Enter number of items: ";
+    cin >> n;
+
+    DiscountedItem items[100];
+
+    double totalAmount = 0;
+
+    for (int i = 0; i < n; i++)
+    {
+        cout << "\nEnter details of item "
+             << i + 1 << endl;
+
+        items[i].accept();
+        items[i].calculate();
+
+        totalAmount += items[i].getFinalPrice();
+    }
+
+    cout << "\n\n================ BILL ================" << endl;
+
+    cout << left
+         << setw(10) << "Item No"
+         << setw(20) << "Name"
+         << setw(12) << "Price"
+         << setw(12) << "Discount"
+         << setw(15) << "Final Price"
+         << endl;
+
+    cout << "--------------------------------------------------------------"
+         << endl;
+
+    for (int i = 0; i < n; i++)
+    {
+        items[i].display();
+    }
+
+    cout << "--------------------------------------------------------------"
+         << endl;
+
+    cout << "Total Amount: Rs. "
+         << fixed << setprecision(2)
+         << totalAmount << endl;
+
+    return 0;
+}
